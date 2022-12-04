@@ -6,6 +6,7 @@ const useWordie = (solution) => {
   const [guesses, setGuesses] = useState([...Array(6)])
   const [history, setHistory] = useState([])
   const [isCorrect, setIsCorrect] = useState(false)
+  const [usedKeys, setUsedKeys] = useState({})
 
   // turn guess into array of objects
   const formatGuess = () => {
@@ -54,6 +55,25 @@ const useWordie = (solution) => {
       return prevTurn + 1
     })
 
+    setUsedKeys((prevUsedKeys) => {
+      let newKeys = {...prevUsedKeys}
+      formattedGuess.forEach((letter) => {
+        const currentColour = newKeys[letter.key]
+
+        if (letter.colour === 'green') {
+          newKeys[letter.key] = 'green'
+          return
+        } else if (letter.colour === 'yellow' && currentColour !== 'green') {
+          newKeys[letter.key] = 'yellow'
+          return
+        } else if (letter.colour === 'grey' && currentColour !== 'green' && currentColour !== 'yellow') {
+          newKeys[letter.key] = 'grey'
+          return
+        }
+      })
+      return newKeys
+    })
+
     setCurrentGuess('')
   }
 
@@ -93,7 +113,7 @@ const useWordie = (solution) => {
     }
   }
 
-  return {turn, currentGuess, guesses, isCorrect, handleKeyup}
+  return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup}
 
 }
  

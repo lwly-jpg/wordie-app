@@ -4,7 +4,7 @@ import Grid from './Grid'
 import Keypad from "./Keypad";
 
 export default function Wordie ({ solution }) {
-  const { currentGuess, handleKeyup, guesses, isCorrect, turn } = useWordie(solution)
+  const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys } = useWordie(solution)
 
   useEffect(() => {
     window.addEventListener('keyup', handleKeyup)
@@ -21,7 +21,7 @@ export default function Wordie ({ solution }) {
       <div>Solution: {solution}</div>
       <div>Current guess: {currentGuess}</div>
       <Grid currentGuess={currentGuess} guesses={guesses} turn={turn}/>
-      <Keypad />
+      <Keypad usedKeys={usedKeys} />
     </div>
     
   );
