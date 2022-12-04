@@ -9,7 +9,28 @@ const useWordie = (solution) => {
 
   // turn guess into array of objects
   const formatGuess = () => {
+    let solutionArray = [...solution]
+    let formattedGuess = [...currentGuess].map((letter) => {
+      return {key: letter, colour: 'grey'}
+    })
 
+    // green letters
+    formattedGuess.forEach((letter, index) => {
+      if (solutionArray[index] === letter.key) {
+        formattedGuess[index].colour = 'green'
+        solutionArray[index] = null
+      }
+    })
+    
+    // yellow letters
+    formattedGuess.forEach((letter, index) => {
+      if (solutionArray.includes(letter.key) && letter.colour !== 'green') {
+        formattedGuess[index].colour = 'yellow'
+        solutionArray[solutionArray.indexOf(letter.key)] = null
+      }
+    })
+
+    return formattedGuess
   }
 
   // handle new guess
@@ -32,6 +53,9 @@ const useWordie = (solution) => {
         console.log('Word needs to be 5 letters long')
         return
       }
+
+      const formatted = formatGuess();
+      console.log(formatted)
     }
 
     if (key === 'Backspace') {
@@ -48,7 +72,6 @@ const useWordie = (solution) => {
         })
       }
     }
-    
   }
 
   return {turn, currentGuess, guesses, isCorrect, handleKeyup}

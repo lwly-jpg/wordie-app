@@ -11,7 +11,11 @@ export default function Wordie ({ solution }) {
   }, [handleKeyup])
 
   return ( 
-    <div>Current guess: {currentGuess}</div>
+    <div>
+      <div>Solution: {solution}</div>
+      <div>Current guess: {currentGuess}</div>
+    </div>
+    
   );
 }
 
