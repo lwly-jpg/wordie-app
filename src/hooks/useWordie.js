@@ -3,7 +3,7 @@ import { useState } from 'react';
 const useWordie = (solution) => {
   const [turn, setTurn] = useState(0)
   const [currentGuess, setCurrentGuess] = useState('')
-  const [guesses, setGuesses] = useState([])
+  const [guesses, setGuesses] = useState([...Array(6)])
   const [history, setHistory] = useState([])
   const [isCorrect, setIsCorrect] = useState(false)
 
@@ -34,8 +34,27 @@ const useWordie = (solution) => {
   }
 
   // handle new guess
-  const addNewGuess = () => {
+  const addNewGuess = (formattedGuess) => {
+    // winning condition
+    if (currentGuess === solution) {
+      setIsCorrect(true)
+    }
 
+    setGuesses((prevGuesses) => {
+      let newGuesses = [...prevGuesses]
+      newGuesses[turn] = formattedGuess
+      return newGuesses
+    })
+
+    setHistory((prevHistory) => {
+      return [...prevHistory, currentGuess]
+    })
+
+    setTurn((prevTurn) => {
+      return prevTurn + 1
+    })
+
+    setCurrentGuess('')
   }
 
   // handle keyup event and track current guess
@@ -55,7 +74,7 @@ const useWordie = (solution) => {
       }
 
       const formatted = formatGuess();
-      console.log(formatted)
+      addNewGuess(formatted);
     }
 
     if (key === 'Backspace') {
