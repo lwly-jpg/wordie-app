@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import useWordie from "../hooks/useWordie";
+import Grid from './Grid'
 
 export default function Wordie ({ solution }) {
   const { currentGuess, handleKeyup, guesses, isCorrect, turn } = useWordie(solution)
@@ -18,6 +19,7 @@ export default function Wordie ({ solution }) {
     <div>
       <div>Solution: {solution}</div>
       <div>Current guess: {currentGuess}</div>
+      <Grid currentGuess={currentGuess} guesses={guesses} turn={turn}/>
     </div>
     
   );
