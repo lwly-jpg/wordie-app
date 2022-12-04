@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Wordie from './components/Wordie';
 
 function App() {
   const [solution, setSolution] = useState(null);
@@ -15,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <h1>Wordie</h1>
-      {solution && <div>Solution is: {solution}</div>}
+      {solution && <Wordie solution={solution} />}
     </div>
   );
 }
