@@ -19,6 +19,20 @@ const useWordie = (solution) => {
 
   // handle keyup event and track current guess
   const handleKeyup = ({ key }) => {
+    if (key === 'Enter') {
+      if (turn > 5) {
+        console.log('All guesses used')
+        return
+      }
+      if (history.includes(currentGuess)) {
+        console.log('Word matches previous guess')
+        return
+      }
+      if (currentGuess.length !== 5) {
+        console.log('Word needs to be 5 letters long')
+        return
+      }
+    }
 
     if (key === 'Backspace') {
       setCurrentGuess((prev) => {
